@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SGPD - Sistema de Gestão</title>
+    <style>
+        /* Configurações Gerais */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            background-color: #F1EFE8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .mobile-frame {
+            width: 390px;
+            height: 844px;
+            background: #F1EFE8;
+            border: 8px solid #333;
+            border-radius: 32px;
+            position: relative;
+            overflow-y: auto;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        .screen { display: none; padding: 20px; }
+        .active { display: block; }
+
+        /* Componentes Comuns */
+        .header {
+            background-color: #534AB7;
+            color: white;
+            padding: 15px;
+            margin: -20px -20px 20px -20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        h1 { font-size: 32px; margin: 0; color: #333; text-align: center; }
+        h2 { font-size: 20px; margin-bottom: 20px; color: #333; }
+        
+        input, select {
+            width: 100%;
+            height: 48px;
+            border: 1px solid #B4B2A9;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            padding: 0 10px;
+            box-sizing: border-box;
+        }
+
+        .btn-primary {
+            width: 100%;
+            height: 48px;
+            background-color: #534AB7;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .btn-green { background-color: #0F6E56; }
+
+        /* Dashboard Grid */
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .card {
+            height: 140px;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-weight: bold;
+            font-size: 14px;
+            cursor: pointer;
+            padding: 10px;
+        }
+
+        /* Cores dos Cards */
+        .c1 { background: #EEEDFE; } .c2 { background: #E6F1FB; }
+        .c3 { background: #E1F5EE; } .c4 { background: #EAF3DE; }
+
+        .imc-box {
+            background: #e0e0e0;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .list-card {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border-left: 5px solid #534AB7;
+        }
+    </style>
+</head>
+<body>
+
+<div class="mobile-frame">
+    
+    <!-- TELA 1: LOGIN -->
+    <div id="login" class="screen active">
+        <div style="text-align: center; margin-top: 100px;">
+            <h1>SGPD</h1>
+            <p style="font-size: 14px;">Sistema de Gestão de Processos Digitais</p>
+        </div>
+        <div style="margin-top: 50px;">
+            <input type="email" placeholder="E-mail">
+            <input type="password" placeholder="Senha">
+            <button class="btn-primary" onclick="showScreen('dashboard')">Entrar</button>
+        </div>
+    </div>
+
+    <!-- TELA 2: DASHBOARD -->
+    <div id="dashboard" class="screen">
+        <div class="header">
+            <span>Olá, Professor</span>
+        </div>
+        <div class="grid">
+            <div class="card c1" onclick="showScreen('cadastro')">👤<br>Cadastrar Aluno</div>
+            <div class="card c2" onclick="showScreen('avaliacao')">📝<br>Nova Avaliação</div>
+            <div class="card c3" onclick="showScreen('historico')">📅<br>Histórico</div>
+            <div class="card c4">📊<br>Relatórios</div>
+        </div>
+    </div>
+
+    <!-- TELA 3: CADASTRO -->
+    <div id="cadastro" class="screen">
+        <div class="header">
+            <span onclick="showScreen('dashboard')" style="cursor:pointer">←</span>
+            <span>Cadastrar Aluno</span>
+        </div>
+        <h2>Dados do Aluno</h2>
+        <input type="text" placeholder="Nome Completo">
+        <input type="text" placeholder="Data de Nascimento">
+        <input type="email" placeholder="E-mail">
+        <input type="tel" placeholder="Telefone">
+        <button class="btn-primary" onclick="showScreen('dashboard')">Salvar</button>
+    </div>
+
+    <!-- TELA 4: AVALIAÇÃO -->
+    <div id="avaliacao" class="screen">
+        <div class="header">
+            <span onclick="showScreen('dashboard')" style="cursor:pointer">←</span>
+            <span>Nova Avaliação</span>
+        </div>
+        <select>
+            <option>Selecionar Aluno...</option>
+            <option>João Silva</option>
+            <option>Maria Souza</option>
+        </select>
+        <input type="number" placeholder="Peso (kg)">
+        <input type="number" placeholder="Altura (cm)">
+        <input type="number" placeholder="Gordura Corporal (%)">
+        <div class="imc-box">IMC: calculado automaticamente</div>
+        <button class="btn-primary btn-green" onclick="showScreen('dashboard')">Gerar Laudo</button>
+    </div>
+
+    <!-- TELA 5: HISTÓRICO -->
+    <div id="historico" class="screen">
+        <div class="header">
+            <span onclick="showScreen('dashboard')" style="cursor:pointer">←</span>
+            <span>Histórico</span>
+        </div>
+        <div class="list-card">
+            <strong>João Silva</strong><br>
+            <small>12/04/2024 - IMC: 24.5</small><br>
+            <button style="margin-top:5px">Ver laudo</button>
+        </div>
+        <div class="list-card">
+            <strong>Maria Souza</strong><br>
+            <small>10/04/2024 - IMC: 22.1</small><br>
+            <button style="margin-top:5px">Ver laudo</button>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    function showScreen(screenId) {
+        // Esconde todas as telas
+        const screens = document.querySelectorAll('.screen');
+        screens.forEach(s => s.classList.remove('active'));
+        
+        // Mostra a tela desejada
+        document.getElementById(screenId).classList.add('active');
+    }
+</script>
+
+</body>
+</html>
